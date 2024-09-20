@@ -1,3 +1,5 @@
+// File: pages\index.tsx
+
 import Image from 'next/image';
 import Head from 'next/head';
 import { ConnectButton } from '@rainbow-me/rainbowkit';

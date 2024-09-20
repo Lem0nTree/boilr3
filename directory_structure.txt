@@ -1,0 +1,66 @@
+├── .env
+├── .eslintrc.json
+├── .gitignore
+├── components/
+│   └── layout/
+│   │   ├── Card.tsx
+│   │   ├── CustomButton.tsx
+│   │   ├── HeadingComponent.tsx
+│   │   ├── index.ts
+│   │   ├── Navbar.tsx
+│   │   └── SEO.tsx
+├── generate_structure.js
+├── LICENSE
+├── next-env.d.ts
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── pages/
+│   ├── api/
+│   │   └── siwe/
+│   │   │   ├── logout.ts
+│   │   │   ├── me.ts
+│   │   │   ├── nonce.ts
+│   │   │   └── verify.ts
+│   ├── examples/
+│   │   ├── ens.tsx
+│   │   ├── index.tsx
+│   │   ├── mint-nft.tsx
+│   │   ├── send-erc20.tsx
+│   │   ├── send-ether.tsx
+│   │   ├── sign.tsx
+│   │   └── siwe.tsx
+│   ├── index.tsx
+│   ├── _app.tsx
+│   └── _document.tsx
+├── postcss.config.js
+├── providers/
+│   └── Web3.tsx
+├── public/
+│   ├── boilr3.svg
+│   ├── favicon/
+│   │   ├── android-chrome-192x192.png
+│   │   ├── android-chrome-512x512.png
+│   │   ├── apple-touch-icon.png
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon.ico
+│   │   └── site.webmanifest
+│   ├── icons/
+│   │   ├── ens.png
+│   │   ├── erc20.png
+│   │   ├── ether.png
+│   │   ├── nft.png
+│   │   ├── sign.png
+│   │   └── siwe.png
+│   └── og.png
+├── README.md
+├── styles/
+│   └── globals.css
+├── tailwind.config.js
+├── tsconfig.json
+├── types/
+│   └── iron-session/
+│   │   └── index.d.ts
+└── utils/
+│   └── config.ts
