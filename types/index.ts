@@ -5,10 +5,10 @@ export interface UserData {
     totalPoints: number;
     rank: number;
     inviteCode: string;
-    holdingPoints: number;
-    swapPoints: number;
-    contractPoints: number;
-    referralPoints: number;
+    holdingPoints?: number;
+    swapPoints?: number;
+    contractPoints?: number;
+    referralPoints?: number;
   }
   
   export interface LeaderboardEntry {
