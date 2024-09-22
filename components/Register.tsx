@@ -1,10 +1,9 @@
-// File: components\Register.tsx
-
-import { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
+import React, { useState, useRef } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
+import { recoverMessageAddress } from 'viem';
 import { registerUser } from '@/utils/api';
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactCodeInput from 'react-code-input';
@@ -21,8 +20,28 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
   const { address } = useAccount();
   const [isCodeValid, setIsCodeValid] = useState(true);
   const [waitingNumber, setWaitingNumber] = useState(15331);
+  const recoveredAddress = useRef<string>('');
 
-  useEffect(() => {
+  const { signMessageAsync } = useSignMessage({
+    async onSuccess(data, variables) {
+      const recoveredAddr = await recoverMessageAddress({
+        message: variables?.message,
+        signature: data,
+      });
+      recoveredAddress.current = recoveredAddr;
+      if (recoveredAddress.current === address) {
+        await handleRegistration(data, variables?.message as string);
+      } else {
+        toast.error('Signature verification failed');
+      }
+    },
+    onError(error) {
+      toast.error(error.message);
+      setLoading(false);
+    },
+  });
+
+  React.useEffect(() => {
     const interval = setInterval(() => {
       setWaitingNumber(prev => Math.max(0, prev - Math.floor(Math.random() * 10)));
     }, 5000);
@@ -34,29 +53,41 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
     setLoading(true);
     setError(null);
 
+    if (!address) {
+      toast.error("Wallet not connected");
+      setLoading(false);
+      return;
+    }
+
+    const message = `
+    By participating in the AsteroNEO airdrop, I agree to the following terms:
+    
+    1. I understand that participation in the airdrop does not guarantee any financial earnings or rewards.
+    2. I confirm that I am not a citizen or resident of the United States.
+    3. I agree to the general terms of service and acknowledge that the AsteroNEO team is not liable for any potential losses or damages.
+    4. I understand that the airdrop is subject to change or cancellation at any time without prior notice.
+    5. I acknowledge that I am participating in the airdrop at my own risk and discretion.
+
+    Invitation Code: ${inviteCode}
+    `;
+
     try {
-      if (!address) throw new Error("Wallet not connected");
-      await registerUser(address, inviteCode);
-      toast.success('Registration successful!', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      await signMessageAsync({ message });
+    } catch (error) {
+      console.error('Error signing message:', error);
+      setLoading(false);
+    }
+  };
+
+  const handleRegistration = async (signature: string, message: string) => {
+    try {
+      await registerUser(address!, inviteCode, signature, message);
+      toast.success('Registration successful!');
       onRegisterSuccess();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "An error occurred during registration";
       setError(errorMessage);
-      toast.error(errorMessage, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error(errorMessage);
       setIsCodeValid(false);
     } finally {
       setLoading(false);
@@ -67,14 +98,16 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col">
       <main className="flex-grow flex items-center justify-center p-4">
         <Card className="w-full max-w-md bg-gray-900 border-gray-800">
-          <div className="p-6 space-y-6">
-            <div className="text-center">
+          <CardHeader>
+            <CardTitle className="text-center">
               <svg className="mx-auto h-24 w-24 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <h2 className="mt-6 text-3xl text-white font-extrabold">Welcome to AsteroNEO</h2>
-            </div>
-            <div className="text-center">
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center mb-6">
               <p className="text-xl font-semibold text-white">🧑‍🤝‍🧑 You are {waitingNumber} in line</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -124,7 +157,7 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
                 {loading ? 'Registering...' : 'Register'}
               </Button>
             </form>
-            <div className="text-center text-sm text-gray-400">
+            <div className="text-center text-sm text-gray-400 mt-6">
               <p>Join our community for updates and invite codes:</p>
               <div className="mt-4 flex justify-center space-x-6">
                 <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
@@ -138,7 +171,7 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
                 </a>
               </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
       </main>
 

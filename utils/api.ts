@@ -36,15 +36,25 @@ export const fetchLeaderboardData = async (): Promise<LeaderboardData> => {
   return await response.json();
 };
 
-export const registerUser = async (address: string, inviteCode: string): Promise<UserData> => {
+
+export const registerUser = async (address: string, inviteCode: string, signature: string, message: string): Promise<UserData> => {
   const response = await fetch(`${API_BASE_URL}/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ address, inviteCode }),
+    body: JSON.stringify({ 
+      address, 
+      invitationCode: inviteCode.toUpperCase(),
+      signature,
+      message
+    }),
   });
   if (!response.ok) {
+    const errorData = await response.json();
+    if (response.status === 400 && errorData.error === "Invalid invitation code") {
+      throw new Error("Invalid invitation code");
+    }
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   return await response.json();
