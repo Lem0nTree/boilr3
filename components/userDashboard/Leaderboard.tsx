@@ -8,7 +8,7 @@ interface LeaderboardProps {
 
 export const Leaderboard = ({ leaderboardData }: LeaderboardProps) => {
   return (
-    <Card className="bg-gray-900 border-gray-800 mt-6 text-white">
+    <Card className="bg-gray-900 border-gray-800 text-white">
       <CardHeader>
         <CardTitle>Leaderboard</CardTitle>
       </CardHeader>
