@@ -23,10 +23,10 @@ export default function Dashboard({ userData, leaderboardData }: DashboardProps)
         <div className="grid grid-cols-1 sd:grid-cols-1 md:grid-cols-3 gap-6 mb-6 grid-rows-3 md:grid-rows-[auto,auto,1fr]">
           {/* Top Row: PortfolioValue and Points */}
           <div className="md:col-span-1 md:row-span-1">
-            <PortfolioValue value={10016.12} />
+            <Points userData={userData} />
           </div>
           <div className="md:col-span-1 md:row-span-1">
-            <Points userData={userData} />
+            <InviteCode userData={userData} />
           </div>
 
           {/* Leaderboard takes full height */}

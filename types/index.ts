@@ -3,8 +3,8 @@
 export interface UserData {
     address: string;
     totalPoints: number;
-    rank: number;
-    inviteCode: string;
+    ranking: number;
+    invitationCode: string;
     holdingPoints?: number;
     swapPoints?: number;
     contractPoints?: number;

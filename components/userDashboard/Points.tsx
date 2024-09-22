@@ -13,7 +13,7 @@ export const Points = ({ userData }: PointsProps) => {
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           Points
-          <span className="text-sm font-normal text-blue-400">Rank #{userData.rank}</span>
+          <span className="text-sm font-bold text-blue-400">Rank #{userData.ranking}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
