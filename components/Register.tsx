@@ -1,12 +1,9 @@
-// /components/Register.tsx
-
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
 import { registerUser } from '@/utils/api';
-import { UserData } from '@/types';
 
 interface RegisterProps {
-  onRegisterSuccess: (userData: UserData) => void;
+  onRegisterSuccess: () => void;
 }
 
 export default function Register({ onRegisterSuccess }: RegisterProps) {
@@ -22,8 +19,8 @@ export default function Register({ onRegisterSuccess }: RegisterProps) {
 
     try {
       if (!address) throw new Error("Wallet not connected");
-      const userData = await registerUser(address, inviteCode);
-      onRegisterSuccess(userData);
+      await registerUser(address, inviteCode);
+      onRegisterSuccess();
     } catch (error) {
       setError(error instanceof Error ? error.message : "An error occurred during registration");
     } finally {
