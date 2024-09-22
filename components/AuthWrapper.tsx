@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { ConnectButton } from '@/components/ConnectButton';
+import { useRouter } from 'next/router';
 
 interface AuthWrapperProps {
   children: ReactNode;
@@ -8,15 +8,20 @@ interface AuthWrapperProps {
 
 export default function AuthWrapper({ children }: AuthWrapperProps) {
   const { isConnected } = useAccount();
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
-  if (!isConnected) {
-    return (
-      <div>
-        <h1>Please connect your wallet</h1>
-        <ConnectButton />
-      </div>
-    );
-  }
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !isConnected && router.pathname !== '/') {
+      router.push('/');
+    }
+  }, [isConnected, mounted, router]);
+
+  if (!mounted) return null;
 
   return <>{children}</>;
 }
