@@ -1,3 +1,5 @@
+// File: components\userDashboard\Points.tsx
+
 import { UserData } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

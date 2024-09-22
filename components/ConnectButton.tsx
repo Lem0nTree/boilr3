@@ -1,3 +1,5 @@
+// File: components\ConnectButton.tsx
+
 // /components/ConnectButton.tsx
 
 import { ConnectButton as RainbowConnectButton } from '@rainbow-me/rainbowkit';

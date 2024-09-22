@@ -1,6 +1,7 @@
 // /utils/api.ts
 
 import { UserData, LeaderboardData } from '@/types';
+import { EarnActionsData } from '@/types/earnActions';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -43,6 +44,15 @@ export const registerUser = async (address: string, inviteCode: string): Promise
     },
     body: JSON.stringify({ address, inviteCode }),
   });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+};
+
+
+export const fetchEarnActionsData = async (): Promise<EarnActionsData> => {
+  const response = await fetch(`${API_BASE_URL}/earn-actions`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }

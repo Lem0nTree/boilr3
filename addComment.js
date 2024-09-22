@@ -38,7 +38,7 @@ async function prependCommentToFile(filePath) {
 }
 
 // Define the src directory
-const srcDir = path.join(__dirname, 'utils');
+const srcDir = path.join(__dirname, 'pages');
 console.log(`Source directory: ${srcDir}`);
 
 // Get all .ts and .tsx files in the src directory

@@ -1,3 +1,5 @@
+// File: components\Dashboard.tsx
+
 import { UserData, LeaderboardData } from '@/types';
 import { Points } from '@/components/userDashboard/Points';
 import { Leaderboard } from '@/components/userDashboard/Leaderboard';
@@ -7,6 +9,7 @@ import { PortfolioValue } from '@/components/userDashboard/PortfolioValue';
 import { BonusStreak } from '@/components/userDashboard/BonusStreak';
 import { Portfolio } from '@/components/userDashboard/Portfolio';
 import { ToastContainer } from 'react-toastify';
+import EarnActions from './earnActions';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface DashboardProps {
@@ -16,7 +19,7 @@ interface DashboardProps {
 export default function Dashboard({ userData, leaderboardData }: DashboardProps) {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
-      <main className="container mx-auto py-8">
+      <main className="container max-w-7xl w-full mx-auto py-8">
         <div className="grid grid-cols-1 sd:grid-cols-1 md:grid-cols-3 gap-6 mb-6 grid-rows-3 md:grid-rows-[auto,auto,1fr]">
           {/* Top Row: PortfolioValue and Points */}
           <div className="md:col-span-1 md:row-span-1">
@@ -36,6 +39,8 @@ export default function Dashboard({ userData, leaderboardData }: DashboardProps)
             <Portfolio userData={userData} />
           </div>
         </div>
+        <EarnActions />
+
       </main>
 
       <ToastContainer

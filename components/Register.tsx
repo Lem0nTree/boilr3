@@ -1,3 +1,5 @@
+// File: components\Register.tsx
+
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { registerUser } from '@/utils/api';

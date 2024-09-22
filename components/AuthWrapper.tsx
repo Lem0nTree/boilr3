@@ -1,3 +1,5 @@
+// File: components\AuthWrapper.tsx
+
 import { ReactNode, useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useRouter } from 'next/router';

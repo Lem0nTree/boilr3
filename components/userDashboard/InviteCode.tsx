@@ -1,3 +1,5 @@
+// File: components\userDashboard\InviteCode.tsx
+
 // /components/dashboard/InviteCode.tsx
 
 interface InviteCodeProps {

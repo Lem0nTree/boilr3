@@ -1,3 +1,5 @@
+// File: components\userDashboard\BonusStreak.tsx
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const BonusStreak = () => {

@@ -1,3 +1,5 @@
+// File: components\userDashboard\Details.tsx
+
 // /components/dashboard/Details.tsx
 
 import { UserData } from '@/types';
