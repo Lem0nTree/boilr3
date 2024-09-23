@@ -17,7 +17,7 @@ export const Points = ({ userData }: PointsProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-3xl font-bold">{userData.totalPoints.toLocaleString('en-US', {maximumFractionDigits: 3})}</p>
+        <p className="text-3xl font-bold">🌟 {userData.totalPoints.toLocaleString('en-US', {maximumFractionDigits: 2})}</p>
       </CardContent>
     </Card>
   );
